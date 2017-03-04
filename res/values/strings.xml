@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MediaShareHost</string>
+     <string name="app_name1">多媒体协同播放系统</string>
+     <string name="author">南京邮电大学项目组</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="wifi">Wifi</string>
+    <string name="init">Init</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="standby">Standby</string>
+    <string name="wifi_name">请输入WIFI热点名：</string>
+    <string name="wifi_psw">请输入WIFI热点密码：</string>
+    <string name="psw_store">记住账号密码？</string>
+     <string name="btn_test">Check</string>
+	 <string name="btn_host">加快主机</string>
+	 <string name="btn_slave">加快从机</string>
+	 <string name="seekbar_text">动态调整播放时延-</string>
+	 <string name="seekbar_number">0ms</string>
+	 <string name="synergy_play"> 视频截取</string>
+	 <string name="synergy_screen"> 分屏播放</string>
+	 <string name="synergy_online"> 在线播放</string>
+	 <string name="audio_play"> 音频截取</string>
+	 
+</resources>

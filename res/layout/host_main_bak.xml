@@ -1,0 +1,287 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+    android:id="@+id/layout4"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:background = "@drawable/linearlayout_style" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textColor="#5f80d6"
+        android:text="@string/app_name1" />
+
+	<ImageView
+	        	android:id="@+id/divide_line"
+           		android:layout_width="fill_parent"
+           		android:layout_height="wrap_content"
+   				android:scaleType="fitXY"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:layout_marginTop="10dp"
+				android:src="@drawable/divider_line"
+				android:layout_centerInParent="true" />
+
+<LinearLayout
+    android:id="@+id/layout4"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/layout5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal" >
+    
+        <ImageButton
+       	   android:id="@+id/wifi"
+           android:layout_width="50dp"
+           android:layout_height="50dp"
+           android:background="@drawable/wifi" />
+
+        <ImageButton
+            android:id="@+id/init"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/init" />
+
+        <ImageButton
+  		    android:id="@+id/start"
+  		    android:layout_width="50dp"
+  		    android:layout_height="50dp"
+  		    android:layout_marginLeft="15dp"
+  		    android:background="@drawable/play" />
+
+        <ImageButton
+            android:id="@+id/stop"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/stop"/>
+        
+    </LinearLayout>    
+   </LinearLayout>
+	<LinearLayout
+	    android:id="@+id/layout6"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/layout4"
+	    android:layout_gravity="center"
+	    android:layout_marginTop="5dp"
+	    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/layout7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal" >   
+
+
+         <TextView 
+  		    android:id="@+id/hotpottext"
+  		    android:text="@string/wifi"
+  		    android:gravity="center_horizontal"
+  		    android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="8dp" 
+            android:textColor="#5f80d6"
+             />
+        <TextView 
+  		    android:id="@+id/inittext"
+  		    android:text="@string/init"
+  		    android:gravity="center_horizontal"
+  		    android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="12dp"  
+            android:textColor="#5f80d6"          
+             />
+
+         <TextView 
+  		    android:id="@+id/playtext"
+  		    android:text="@string/start"
+  		    android:gravity="center_horizontal"
+  		    android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="18dp"  
+            android:textColor="#5f80d6"             
+            />
+          <TextView 
+  		    android:id="@+id/pausetext"
+  		    android:text="@string/stop"
+  		    android:gravity="center_horizontal"
+  		    android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="15dp"  
+            android:textColor="#5f80d6"             
+            />
+         </LinearLayout>    
+   </LinearLayout>
+ </LinearLayout>
+ 
+    <Spinner android:id="@+id/spinner"
+           android:layout_width="fill_parent"
+           android:layout_height="50dp"
+           android:layout_marginTop="10dp" 
+           android:layout_marginLeft="8dp"
+           android:layout_marginRight="8dp"
+           android:background="@drawable/linearlayout_style">
+	    
+	</Spinner>
+
+    <TextView
+        android:id="@+id/seekbar_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textColor="#5f80d6"
+        android:text="@string/seekbar_text" />
+
+    <TextView
+            android:id="@+id/num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingTop="1dp"
+            android:text="@string/seekbar_number"
+            android:textColor="#5f80d6" />
+     <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:max="40"
+            android:progress="0">
+         
+     </SeekBar>
+     
+     <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/linearlayout_style"
+        android:stretchColumns="0" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"  
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/synergy_icon_play"
+                android:text="@string/synergy_play"  
+                android:textColor="#ff333333"  
+                android:textSize="16.0sp">
+            </TextView>
+            <LinearLayout android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginRight="15dp">
+            <com.vaylb.switchbutton.SwitchButton
+                android:id="@+id/audio_synergy_play_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"/>
+            </LinearLayout>
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"  
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/synergy_icon_play"
+                android:text="@string/synergy_online"  
+                android:textColor="#ff333333"  
+                android:textSize="16.0sp">
+            </TextView>
+            <LinearLayout android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginRight="15dp">
+            <com.vaylb.switchbutton.SwitchButton
+                android:id="@+id/audio_synergy_online_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"/>
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+    
+     <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/linearlayout_style"
+        android:stretchColumns="0" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"  
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/synergy_icon_play"
+                android:text="@string/synergy_screen"  
+                android:textColor="#ff333333"  
+                android:textSize="16.0sp">
+            </TextView>
+            <LinearLayout android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginRight="15dp">
+            <com.vaylb.switchbutton.SwitchButton
+                android:id="@+id/audio_synergy_screen_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"/>
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+    
+     <SurfaceView    
+        android:id="@+id/surfaceView"    
+        android:layout_width="fill_parent"    
+        android:layout_height="200dp" 
+        android:background="#f0f0f0"/>
+
+</LinearLayout>

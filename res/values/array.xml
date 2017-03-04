@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="play_mode">
+        <item>同步播放</item>
+        <item>轻度混响</item>
+        <item>卡拉OK</item>
+    </string-array>
+    
+</resources>

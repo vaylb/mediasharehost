@@ -1,0 +1,166 @@
+#include <string.h>
+#include <jni.h>
+#include "JNIHelp.h"
+#include <stdlib.h>
+#include <utils/Log.h>
+#include "android_runtime/Log.h"
+#include "android_runtime/AndroidRuntime.h"
+
+#include <sys/resource.h>
+#include <binder/IPCThreadState.h>
+
+#include <media/IAudioFlinger.h>
+#include <media/HostPlay.h>
+
+using namespace android;
+
+sp<HostPlay>  mHostPlay;
+
+jint  android_coop_HostPlay_native_setup(JNIEnv * env, jobject obj, jint receivebuffersize, jint sendbuffersize)
+{
+	mHostPlay = new HostPlay();
+	return mHostPlay->create(receivebuffersize, sendbuffersize);
+}
+
+void  android_coop_HostPlay_native_setstartflag(JNIEnv * env, jobject obj, jint flag)
+{
+	if(mHostPlay != NULL){
+		mHostPlay->setstartflag(flag);
+	}
+}
+
+jboolean android_coop_HostPlay_native_checkstandbyflag(JNIEnv * env, jclass clazz)
+{
+	if(mHostPlay == NULL) return true;
+	return mHostPlay->standbyflag;
+}
+
+jboolean android_coop_HostPlay_native_checkreadflag(JNIEnv * env, jclass clazz)
+{
+	if(mHostPlay == NULL) return false;
+	return mHostPlay->readflag;
+}
+
+jboolean android_coop_HostPlay_native_checkexitflagI(JNIEnv * env, jclass clazz)
+{
+	if(mHostPlay == NULL) return true;
+	return mHostPlay->exitflag1;
+}
+
+jboolean android_coop_HostPlay_native_checkexitflagII(JNIEnv * env, jclass clazz)
+{
+	if(mHostPlay == NULL) return true;
+	return mHostPlay->exitflag2;
+}
+
+void android_coop_HostPlay_native_setbuffertemp(JNIEnv* env,jobject thiz,jobject sendbuffer)
+{
+	void* buffer = env->GetDirectBufferAddress(sendbuffer);
+	jlong length = env->GetDirectBufferCapacity(sendbuffer);
+	if(mHostPlay == NULL) return;
+	mHostPlay->setBufferTemp(buffer,length);
+}
+
+void android_coop_HostPlay_native_setplayflag(JNIEnv * env, jclass clazz)
+{
+	if(mHostPlay == NULL) return;
+	mHostPlay->playflag = true;
+}
+
+void android_coop_HostPlay_native_setreadflag(JNIEnv * env, jclass clazz)
+{
+	if(mHostPlay == NULL) return;
+	mHostPlay->readflag = false;
+}
+
+void android_coop_HostPlay_native_exit(JNIEnv* env,jclass clazz)
+{
+	ALOGE("vaylb_test-->JNI native_exit run.");
+	mHostPlay->exit();
+	mHostPlay.clear();
+}
+
+static JNINativeMethod gMethods[] = {
+	{
+		"native_setup",
+		"(II)I",
+		(void*) android_coop_HostPlay_native_setup
+	},
+	{
+		"native_setstartflag",
+		"(I)V",
+		(void*) android_coop_HostPlay_native_setstartflag
+	},
+	{
+		"native_checkstandbyflag",
+		"()Z",
+		(void*) android_coop_HostPlay_native_checkstandbyflag
+	},
+	{
+		"native_checkreadflag",
+		"()Z",
+		(void*) android_coop_HostPlay_native_checkreadflag
+	},
+	{
+		"native_checkexitflagI",
+		"()Z",
+		(void*) android_coop_HostPlay_native_checkexitflagI
+	},
+	{
+		"native_checkexitflagII",
+		"()Z",
+		(void*) android_coop_HostPlay_native_checkexitflagII
+	},
+	{
+		"native_setplayflag",
+		"()V",
+		(void*) android_coop_HostPlay_native_setplayflag
+	},
+	{
+		"native_setreadflag",
+		"()V",
+		(void*) android_coop_HostPlay_native_setreadflag
+	},
+	{
+		"native_setbuffertemp",
+		"(Ljava/nio/ByteBuffer;)V",
+		(void*) android_coop_HostPlay_native_setbuffertemp
+	},
+	{
+		"native_exit",
+		"()V",
+		(void*) android_coop_HostPlay_native_exit
+	},
+};
+
+static int register_android_coop_HostPlay(JNIEnv *env)
+{
+    return AndroidRuntime::registerNativeMethods(env,
+                "com/zhao/host/HostPlay", gMethods, NELEM(gMethods));
+}
+
+JNIEXPORT jint JNI_OnLoad(JavaVM *jvm, void *reserved)
+{
+	JNIEnv *e;
+    int status;
+	if(jvm->GetEnv((void**)&e,JNI_VERSION_1_6)!=JNI_OK){
+		return JNI_ERR;
+	}
+	ALOGE("vaylb_test-->JNI: jni_onload().");
+	if((status = register_android_coop_HostPlay(e))<0){
+	ALOGE("jni Mainactivity registration failure, status: %d", status);
+		return JNI_ERR;
+	}
+
+	return JNI_VERSION_1_6;
+}
+
+JNIEXPORT void JNI_OnUnload(JavaVM *jvm, void *reserved)
+{
+	ALOGE("vaylb_test-->JNI: jni_OnUnload().");
+	mHostPlay.clear();
+	mHostPlay = NULL;
+}
+
+
+

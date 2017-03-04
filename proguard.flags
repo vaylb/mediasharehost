@@ -1,0 +1,5 @@
+-keep class com.example.audiosynergy.MainActivity
+-keep class com.pzhao.slave.SlavePlay
+-keepclasseswithmembers class com.example.audiosynergy.MainActivity {
+  *** TransmitData();
+}
