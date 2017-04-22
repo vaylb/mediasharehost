@@ -40,7 +40,7 @@ public class ReceiveUdp implements Runnable {
             byte[] data = new byte[10];
             DatagramPacket receive = new DatagramPacket(data, data.length);
             while (runFlag) {
-                Log.d(TAG, "pzhao-> udp listen");
+//                Log.d(TAG, "pzhao-> udp listen");
                 socket.receive(receive);
                 /*
                 if (!hasInit) {
@@ -83,6 +83,7 @@ public class ReceiveUdp implements Runnable {
                     //mHostPlay.startgetSlaveWrite();
                     //mHostPlay.getSlaveWrite();
                     mHostPlay.nativeStartPlay = true;
+                    Log.e(TAG, "vaylb_time-->Audio playback time:"+System.currentTimeMillis());
                 }
                 else if (result.equals(UdpOrder.SLVAE_CALL_COME)) {
                     Message message = new Message();
@@ -107,9 +108,9 @@ public class ReceiveUdp implements Runnable {
 
                 }
                 else if (result.equals(UdpOrder.SLAVE_EXIT)) {
-                    Message message = new Message();
-                    message.what = 3;
-                    mHostPlay.mHandler.sendMessage(message);
+//                    Message message = new Message();
+//                    message.what = 3;
+//                    mHostPlay.mHandler.sendMessage(message);
                 }
             }
         } catch (IOException exception) {

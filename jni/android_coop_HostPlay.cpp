@@ -195,6 +195,7 @@ void android_coop_HostPlay_native_read_ahead(JNIEnv * env, jobject obj,
 		jint readahead) {
 	if (mHostPlay == NULL)
 		return;
+	ALOGE("audio_test-->JNI native_read_ahead %d",readahead);
 	mHostPlay->readaheadflag = true;
 	mHostPlay->readaheadcount = readahead;
 }
@@ -400,6 +401,9 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *jvm, void *reserved) {
 	VideoShare::instantiate(mVideoShare);
 
 	android_coop_HostPlay_initVideoShareClient();
+
+	//ProcessState::self()->startThreadPool();
+	//IPCThreadState::self()->joinThreadPool();
 
 	return JNI_VERSION_1_6;
 }

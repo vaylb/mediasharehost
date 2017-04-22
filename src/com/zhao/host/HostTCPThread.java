@@ -70,7 +70,7 @@ public class HostTCPThread implements Runnable {
         lock.lock();
         try {
             while (!startFlag) {
-                Log.d(TAG, "pzhao->wait in checkatart");
+                Log.d(TAG, "vaylb->wait in checkatart");
                 start.await();
             }
         } finally {
@@ -89,8 +89,9 @@ public class HostTCPThread implements Runnable {
         try {
             while (!HostPlay.native_checkreadpos()) {
                 mHostPlay.native_signaleToWrite();
-                if (!isEmpty.await(10, TimeUnit.MILLISECONDS)) { // timeout then
+                if (!isEmpty.await(10, TimeUnit.MILLISECONDS)) { // 10ms timeout then
                     ret = false;
+                    Log.d(TAG, "vaylb->Tcp check can read false");
                     break;
                 }
             }
@@ -108,6 +109,7 @@ public class HostTCPThread implements Runnable {
         try {
             isEmpty.signal();
             signalByNative = true;
+            Log.d(TAG, "vaylb-> signal tcp to send data");
         } finally {
             lock.unlock();
         }
@@ -164,10 +166,12 @@ public class HostTCPThread implements Runnable {
     @Override
     public void run() {
         try {
+        	Log.d(TAG, "vaylb-->TCP Thread id:"+Thread.currentThread().getName());
             serverSocket = new ServerSocket(DEFAULT_PORT_TCP);
             serverSocket.setReuseAddress(true);
             serverSocket.setSoTimeout(5000);
             int offset = 0;
+            long time_send = 0;
             while (TcpFlag) {
                     if (!hasConnect) {
                         cheakStart();
@@ -204,8 +208,12 @@ public class HostTCPThread implements Runnable {
                             //when music player pause or change song, let check the host and slave has written 
                             if (mHostPlay.native_needcheckwrited())
                                 mHostPlay.getSlaveWrite();
-                            
+//                            Log.d(TAG, "vaylb-->Tcp thread send "+mCount+" bytes data, time slot: "+(System.currentTimeMillis()-time_send));
+//                            time_send = System.currentTimeMillis();
                         }
+//                        else{
+//                        	Log.d(TAG, "vaylb->Tcp checkCanRead false");
+//                        }
                         checkStop();
                     }
             }

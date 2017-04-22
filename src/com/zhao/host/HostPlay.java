@@ -99,6 +99,7 @@ public class HostPlay {
     public static volatile int check_begin = 20;
     public static volatile int check_end = 15;
     public ExecutorService hostExecutor = Executors.newCachedThreadPool();
+//    public ExecutorService hostExecutor = Executors.newFixedThreadPool(10);
     private HostTCPThread tcpThread;
     public volatile InetAddress slaveAddress;
     public ReceiveUdp mReceiveUdp;
@@ -383,10 +384,10 @@ public class HostPlay {
                         int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0);
                         if (WifiManager.WIFI_STATE_ENABLED == state % 10) {
                             // Wifi is enabled
-                            Log.d(TAG, "pzhao->wifi ap enabled");
+                            Log.d(TAG, "vaylb->wifi ap enabled");
                         }
                         if (WifiManager.WIFI_STATE_DISABLED == state % 10) {
-                            Log.d(TAG, "pzhao->wifi ap disabled");
+                            Log.d(TAG, "vaylb->wifi ap disabled");
                             Message msg = new Message();
                             msg.what = 8;
                             mHandler.sendMessage(msg);
@@ -429,10 +430,18 @@ public class HostPlay {
             if (tcpThread == null) {
             	startAudioTcpThread();
             }
-            commandCast(UdpOrder.STANDBY_FALSE);
+            //commandCast(UdpOrder.STANDBY_FALSE);
             // make sure fromJni can call by native
             fromJni(7);
             native_setstartflag(1);
+//            new Thread(){
+//            	@Override
+//            	public void run() {
+//            		super.run();
+//            		native_setstartflag(1);
+//            	};
+//            }.start();
+            
             Log.d(TAG, "vaylb->start");
         }
         return 0;
@@ -587,7 +596,7 @@ public class HostPlay {
         check_begin += 2;
         check_end += 2;
         //getWriteUdp.setCount(10);
-        Log.d(TAG, "pzhao->slave_host " + slave_host);
+        Log.d(TAG, "vaylb->slave_host " + slave_host);
     }
 
     // add by 10/22
@@ -597,7 +606,7 @@ public class HostPlay {
         check_end -= 1;
 
         //getWriteUdp.setCount(10);
-        Log.d(TAG, "pzhao->slave_host " + slave_host);
+        Log.d(TAG, "vaylb->slave_host " + slave_host);
     }
 
     public void quick_slave() {
@@ -605,7 +614,7 @@ public class HostPlay {
         check_begin += 1;
         check_end += 1;
         //getWriteUdp.setCount(10);
-        Log.d(TAG, "pzhao->slave_host " + slave_host);
+        Log.d(TAG, "vaylb->slave_host " + slave_host);
     }
 
     public void setSlaveHost(int delay) {
@@ -614,7 +623,7 @@ public class HostPlay {
         check_end = slave_host - 4;
         if (getWriteUdp != null)
             getWriteUdp.setCount(10);
-        Log.d(TAG, "pzhao->slave_host " + slave_host);
+        Log.d(TAG, "vaylb->slave_host " + slave_host);
     }
 
     // 添加：aquireWakeLock() by hui.
@@ -652,9 +661,9 @@ public class HostPlay {
                 NetworkInfo wifiInfo = connmanager
                         .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
                 if (wifiInfo == null || wifiInfo.isConnected() == false) {
-                    Log.d(TAG, "pzhao->wifi lost");
+                    Log.d(TAG, "vaylb->wifi lost");
                 } else {
-                    Log.d(TAG, "pzhao->wifi connect");
+                    Log.d(TAG, "vaylb->wifi connect");
                 }
             }
         };
@@ -669,11 +678,11 @@ public class HostPlay {
                 // TODO Auto-generated method stub
                 String action = arg1.getAction();
                 if (action.equals(Intent.ACTION_SCREEN_ON)) {
-                    Log.d(TAG, "pzhao->screen_on");
+                    Log.d(TAG, "vaylb->screen_on");
                     if (hasGetSlaveip)
                         hostExecutor.execute(new SendUdp(UdpOrder.SCREEN_ON, slaveAddress));
                 } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
-                    Log.d(TAG, "pzhao->screen_off");
+                    Log.d(TAG, "vaylb->screen_off");
                     if (hasGetSlaveip)
                         hostExecutor.execute(new SendUdp(UdpOrder.SCREEN_OFF, slaveAddress));
                 }

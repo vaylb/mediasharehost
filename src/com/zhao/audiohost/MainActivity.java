@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore.Audio;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -78,6 +79,7 @@ public class MainActivity extends Activity {
   //vaylb
     private SurfaceView surfaceview;
     private SurfaceHolder surfaceHolder;
+    private boolean surfaceview_init_flag = false;
     
     static {
         System.loadLibrary("media_host");
@@ -89,7 +91,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.host_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        mHandler = new MyHandler(this);
+        if(mHandler == null){
+        	mHandler = new MyHandler(this);
+        }
+        Log.d(TAG, "vaylb-->Main Thread id:"+Thread.currentThread().getName());
+        
         wifi_config_dialog = getResources().getIdentifier(
                 "wifi_config_dialog", "layout", getPackageName());
         wifiname = getResources().getIdentifier("wifiName", "id",
@@ -103,11 +109,17 @@ public class MainActivity extends Activity {
         mLayoutId = new WifiLayoutId(wifi_config_dialog, wifiname,
                 wifiPassword, wifiCheckBox);
         
-        init_surfaceview();
+        if(!surfaceview_init_flag){
+        	surfaceview_init_flag = true;
+        	init_surfaceview();
+        }
         
 
-        mhp = new HostPlay(MainActivity.this, mLayoutId, mHandler,surfaceHolder.getSurface());
-        mhp.registerReceiver();
+        if(mhp == null){
+        	mhp = new HostPlay(MainActivity.this, mLayoutId, mHandler,surfaceHolder.getSurface());
+        	mhp.registerReceiver();
+        }
+        
 
         // setOnTouchListener
         View.OnTouchListener ImageButtonTouchListener = new View.OnTouchListener() {
@@ -423,7 +435,6 @@ public class MainActivity extends Activity {
             }
 
         }
-
     }
     
 	OnCheckedChangeListener switchListener = new OnCheckedChangeListener() {
@@ -436,6 +447,7 @@ public class MainActivity extends Activity {
 			
 			case R.id.audio_switch:
 				if (isChecked) {
+					Log.e(TAG, "vaylb_time-->Audio start time:"+System.currentTimeMillis());
 					mhp.setBuffer(); //16-03-24 move from initbutton to here
 					mhp.start();
 				}else if (!isChecked) {
@@ -445,6 +457,7 @@ public class MainActivity extends Activity {
 				
 			case R.id.video_switch:
 				if (isChecked) {
+					Log.e(TAG, "vaylb_time-->Video start time:"+System.currentTimeMillis());
 					if(!slave_ip_set_flag)
 					{
 						new Thread() {
@@ -519,7 +532,7 @@ public class MainActivity extends Activity {
         if (!wifiManager.isWifiEnabled()) {  
         wifiManager.setWifiEnabled(true);    
         }  
-        WifiInfo wifiInfo = wifiManager.getConnectionInfo();       
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo(); 
         int ipAddress = wifiInfo.getIpAddress();   
         return intToIp(ipAddress); 
     }
@@ -533,4 +546,9 @@ public class MainActivity extends Activity {
         return (i & 0xFF ) + "." + ((i >> 8 ) & 0xFF) + "." + ((i >> 16 ) & 0xFF) + "." + ( i >> 24 & 0xFF) ;  
     }
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Log.e("MainActivity", "vaylb--> onPause------------------------------------------------");
+	}
 }
